@@ -14,12 +14,16 @@ func main() {
 	config := models.Config{
 		StorageType: "file",
 		StoragePath: "./data",
+		LogLevel: "INFO",
 	}
+
+	// initialise a global logger, based on slog but abstracted to change easily later
+	NewLogger(config)
 
 	// create a storage using the factory pattern
 	storage, err := NewStorage(config)
 	if err != nil {
-		fmt.Println("Could not start due to error in the storage subsystem", err)
+		logger.Error("Could not start due to error in the storage subsystem", err)
 		return
 	}
 }
