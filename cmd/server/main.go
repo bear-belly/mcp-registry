@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
-
+	"github.com/bear-belly/mcp-registry/internal/logger"
 	"github.com/bear-belly/mcp-registry/internal/models"
+	"github.com/bear-belly/mcp-registry/internal/storage"
 )
 
 func main() {
@@ -18,10 +18,10 @@ func main() {
 	}
 
 	// initialise a global logger, based on slog but abstracted to change easily later
-	NewLogger(config)
+	logger.NewLogger(config)
 
 	// create a storage using the factory pattern
-	storage, err := NewStorage(config)
+	_, err := storage.NewStorage(config)
 	if err != nil {
 		logger.Error("Could not start due to error in the storage subsystem", err)
 		return

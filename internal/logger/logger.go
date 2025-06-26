@@ -5,6 +5,8 @@ import (
 	"log/slog"
 	"os"
 	"strings"
+
+	"github.com/bear-belly/mcp-registry/internal/models"
 )
 
 // Setup configures the global slog logger based on environment variables
