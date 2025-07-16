@@ -7,5 +7,6 @@ import (
 )
 
 type Storage interface {
+	ListServers(ctx context.Context) ([]models.Server, error)
 	CreateServer(ctx context.Context, server models.Server) error
 }

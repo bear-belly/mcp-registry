@@ -1,0 +1,31 @@
+{{define "index-content"}}
+<div class="app">
+    <div class="dashboard">
+        <div class="server-list">
+            <h3>Current MCP Servers</h3>
+            <div class="server-cards">
+                {{range .Data}}
+                    <div class="server-card">
+                        <h4>{{.Name}}</h4>
+                        <p>{{.Description}}</p>
+                        <div class="server-meta">
+                            <span class="status status-{{.Status}}">{{.Status}}</span>
+                            <span class="date">Created: {{.CreatedAt.Format "Jan 02, 2006"}}</span>
+                        </div>
+                        <a target="_blank" href="{{.URL}}" class="btn-primary">More info...</a>
+                    </div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "scripts"}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Content loaded...')
+});
+
+</script>
+{{end}}
