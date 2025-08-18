@@ -73,19 +73,20 @@ func (s *Server) setupHomeRoute() {
 
 		ctx := r.Context()
 
+		// Retrieve servers from storage
 		servers, err := s.storage.ListServers(ctx)
 		if err != nil {
 			errors.WriteError(w, errors.NewInternalError("Error retrieving servers", err))
 		}
 
-		fmt.Println(servers)
-
+		// Map server data to template data
 		data := templates.PageData{
 			Title:        "MCP Registry",
 			PageTemplate: "index",
 			Data:         servers,
 		}
 
+		// Render the template
 		if err := templates.ExecuteTemplate(ctx, w, "layout.html", data); err != nil {
 			errors.WriteError(w, errors.NewInternalError("Error rendering template", err))
 		}

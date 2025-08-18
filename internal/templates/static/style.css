@@ -489,6 +489,11 @@ input {
     color: #1976d2;
 }
 
+.status-approved {
+    background: #90da96;
+    color: black;
+}
+
 .status-in_progress {
     background: #fff3e0;
     color: #f57c00;

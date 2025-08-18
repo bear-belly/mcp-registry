@@ -1,0 +1,8 @@
+{
+    "name": "IDP",
+    "description": "Interact with our Internal Developer Platform to manage cloud resources and application deployments.",
+    "transport": "SSE",
+    "status": "new",
+    "createdAt": "2025-08-18T12:34:56Z",
+    "url": "https://github.com/github/github-mcp-server"
+}

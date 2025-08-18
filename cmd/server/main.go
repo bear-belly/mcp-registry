@@ -25,7 +25,7 @@ func main() {
 	// initialise a global logger, based on slog but abstracted to change easily later
 	logger.NewLogger(config)
 
-	// create a storage using the factory pattern
+	// create a storage interface using the factory pattern
 	logger.Info("Configuring storage...")
 	storage, err := storage.NewStorage(config)
 	if err != nil {
@@ -45,8 +45,8 @@ func main() {
 	server := server.New(storage, config)
 	server.SetupRoutes()
 
-	logger.Info("Starting server on :8080")
-	if err := http.ListenAndServe(":8080", server.Handler()); err != nil {
+	logger.Info("Starting server on :8088")
+	if err := http.ListenAndServe(":8088", server.Handler()); err != nil {
 		logger.Error("Server failed to start: ", err)
 	}
 }
