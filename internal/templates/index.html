@@ -12,7 +12,7 @@
                             <span class="status status-{{.Status}}">{{.Status}}</span>
                             <span class="date">Created: {{.CreatedAt.Format "Jan 02, 2006"}}</span>
                         </div>
-                        <a target="_blank" href="{{.URL}}" class="btn-primary">More info...</a>
+                        <a href="/server/{{.Name}}" class="btn-primary">More info...</a>
                     </div>
                 {{end}}
             </div>

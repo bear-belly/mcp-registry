@@ -1,10 +1,12 @@
 package server
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/bear-belly/mcp-registry/internal/errors"
@@ -62,6 +64,22 @@ func (s *Server) setupHealthRoutes() {
 	})
 }
 
+func (s *Server) getServerByName(name string) (models.Server, error) {
+	ctx := context.Background()
+	servers, err := s.storage.ListServers(ctx)
+	if err != nil {
+		return models.Server{}, err
+	}
+
+	for _, server := range servers {
+		if server.Name == name {
+			return server, nil
+		}
+	}
+
+	return models.Server{}, errors.NewNotFoundError("Server")
+}
+
 func (s *Server) setupHomeRoute() {
 	// Home page route
 	s.mux.Handle("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +95,7 @@ func (s *Server) setupHomeRoute() {
 		servers, err := s.storage.ListServers(ctx)
 		if err != nil {
 			errors.WriteError(w, errors.NewInternalError("Error retrieving servers", err))
+			return
 		}
 
 		// Map server data to template data
@@ -84,6 +103,50 @@ func (s *Server) setupHomeRoute() {
 			Title:        "MCP Registry",
 			PageTemplate: "index",
 			Data:         servers,
+		}
+
+		// Render the template
+		if err := templates.ExecuteTemplate(ctx, w, "layout.html", data); err != nil {
+			errors.WriteError(w, errors.NewInternalError("Error rendering template", err))
+		}
+	}))
+
+	// Server details route
+	s.mux.Handle("/server/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		serverName := strings.TrimPrefix(r.URL.Path, "/server/")
+		if serverName == "" {
+			http.NotFound(w, r)
+			return
+		}
+
+		ctx := r.Context()
+		server, err := s.getServerByName(serverName)
+		if err != nil {
+			if _, ok := err.(*errors.AppError); ok {
+				errors.WriteError(w, err)
+			} else {
+				errors.WriteError(w, errors.NewInternalError("Error retrieving server", err))
+			}
+			return
+		}
+
+		// Convert config to JSON string if it exists
+		var configJSON string
+		if server.Config != nil {
+			configBytes, err := json.MarshalIndent(server.Config, "", "    ")
+			if err != nil {
+				errors.WriteError(w, errors.NewInternalError("Error formatting config", err))
+				return
+			}
+			configJSON = string(configBytes)
+		}
+
+		// Map server data to template data
+		data := templates.PageData{
+			Title:        server.Name + " - MCP Registry",
+			PageTemplate: "server",
+			Data:         server,
+			ConfigJSON:   configJSON,
 		}
 
 		// Render the template

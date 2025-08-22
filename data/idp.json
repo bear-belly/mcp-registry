@@ -4,5 +4,13 @@
     "transport": "SSE",
     "status": "new",
     "createdAt": "2025-08-18T12:34:56Z",
-    "url": "https://github.com/github/github-mcp-server"
+    "url": "https://github.com/github/github-mcp-server",
+    "config": {
+        "idp": {
+            "url": "https://api.ourcompany.com/mcp/",
+            "headers": {
+                "Authorization": "Bearer token"
+            }
+        }
+    }
 }

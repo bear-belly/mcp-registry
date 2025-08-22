@@ -50,4 +50,5 @@ type PageData struct {
 	Title        string
 	PageTemplate string      // Specifies which template content to render
 	Data         interface{} // For passing page-specific data
+	ConfigJSON   string      // JSON string representation of config data
 }

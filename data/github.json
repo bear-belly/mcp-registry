@@ -4,5 +4,13 @@
     "transport": "SSE",
     "status": "approved",
     "createdAt": "2025-08-18T12:34:56Z",
-    "url": "https://github.com/github/github-mcp-server"
+    "url": "https://github.com/github/github-mcp-server",
+    "config": {
+        "github": {
+            "url": "https://api.githubcopilot.com/mcp/",
+            "headers": {
+                "Authorization": "Bearer token"
+            }
+        }
+    }
 }

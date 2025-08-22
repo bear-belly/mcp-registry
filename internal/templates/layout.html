@@ -21,6 +21,8 @@
     <main class="main-content">
         {{if eq .PageTemplate "index"}}
             {{template "index-content" .}}
+        {{else if eq .PageTemplate "server"}}
+            {{template "server-content" .}}
         {{end}}
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
