@@ -1,6 +1,6 @@
 {
     "name": "GitHub",
-    "description": "Manage source code, pull requests, issues and discussions on GitHub.",
+    "description": "Manage source code, pull requests, issues and discussions on GitHub. This is the official MCP server from Microsoft.",
     "transport": "SSE",
     "status": "approved",
     "createdAt": "2025-08-18T12:34:56Z",
